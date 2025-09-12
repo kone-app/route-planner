@@ -23,7 +23,7 @@ class RoutingStack(Stack):
             ),
             memory_size=512,
             timeout=Duration.seconds(30),
-            environment={   # 👈 inject env vars into container
+            environment={   #  inject env vars into container
                 "DIGITRANSIT_API_KEY": os.getenv("DIGITRANSIT_API_KEY", ""),
                 "FROM_EMAIL": os.getenv("FROM_EMAIL", ""),
                 "TO_EMAIL": os.getenv("TO_EMAIL", ""),
