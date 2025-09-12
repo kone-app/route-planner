@@ -2,7 +2,7 @@ name: Trigger App to Send Mail
 
 on:
   schedule:
-    - cron: '25 22 * * *'  # 01:25 AM Finland (22:25 UTC)
+    - cron: '33 22 * * *'  # 01:25 AM Finland (22:25 UTC)
   workflow_dispatch:        # Optional manual trigger
 
 jobs:

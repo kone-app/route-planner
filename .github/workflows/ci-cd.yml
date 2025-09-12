@@ -4,9 +4,7 @@ on:
   push:
     branches: [ main ]
   pull_request:
-  schedule:
-    - cron: '11 22 * * *'  # Runs daily at 22:10 UTC = 01:10 AM Finland
-  workflow_dispatch:       # Optional manual trigger
+  
 
 jobs:
   build-test-sonar:
