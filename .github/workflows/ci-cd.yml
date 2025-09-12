@@ -93,7 +93,7 @@ jobs:
       #    cdk deploy --require-approval never
 
       - name: Deploy with CDK
-        run: cdk deploy --require-approval never
+        run: cdk deploy --app "python3 app.py" --require-approval never
         env:
           DIGITRANSIT_API_KEY: ${{ secrets.DIGITRANSIT_API_KEY }}
           FROM_EMAIL: ${{ secrets.FROM_EMAIL }}
