@@ -87,7 +87,18 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
-      - name: CDK Deploy
-        run: |
-          cd cdk
-          cdk deploy --require-approval never
+      #- name: CDK Deploy
+      #  run: |
+      #    cd cdk
+      #    cdk deploy --require-approval never
+
+      - name: Deploy with CDK
+        run: cdk deploy --require-approval never
+        env:
+          DIGITRANSIT_API_KEY: ${{ secrets.DIGITRANSIT_API_KEY }}
+          FROM_EMAIL: ${{ secrets.FROM_EMAIL }}
+          TO_EMAIL: ${{ secrets.TO_EMAIL }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          GEO_CODING_URL: ${{ secrets.GEO_CODING_URL }}
+          ROUTING_URL: ${{ secrets.ROUTING_URL }}
+

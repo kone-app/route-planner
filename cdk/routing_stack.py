@@ -3,6 +3,7 @@ from aws_cdk import (
     aws_lambda as _lambda,
     aws_apigateway as apigateway,
     Duration,
+    CfnOutput,
 )
 from constructs import Construct
 import os
@@ -22,6 +23,18 @@ class RoutingStack(Stack):
             ),
             memory_size=512,
             timeout=Duration.seconds(30),
+            environment={   # 👈 inject env vars into container
+                "DIGITRANSIT_API_KEY": os.getenv("DIGITRANSIT_API_KEY", ""),
+                "FROM_EMAIL": os.getenv("FROM_EMAIL", ""),
+                "TO_EMAIL": os.getenv("TO_EMAIL", ""),
+                "GMAIL_APP_PASSWORD": os.getenv("GMAIL_APP_PASSWORD", ""),
+                "GEO_CODING_URL": os.getenv(
+                    "GEO_CODING_URL", "https://api.digitransit.fi/geocoding/v1/search"
+                ),
+                "ROUTING_URL": os.getenv(
+                    "ROUTING_URL", "https://api.digitransit.fi/routing/v2/hsl/gtfs/v1"
+                ),
+            },
         )
 
         # API Gateway REST API with Lambda integration
@@ -34,4 +47,8 @@ class RoutingStack(Stack):
 
         # /journeys endpoint
         journeys = api.root.add_resource("journeys")
-        journeys.add_method("GET")  # GET /journeys → Lambda
+        journeys.add_method("GET")
+
+        # Output useful info after deploy
+        CfnOutput(self, "ApiEndpoint", value=api.url)
+        CfnOutput(self, "LambdaName", value=journey_lambda.function_name)
