@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import aws_cdk as cdk
+import os
 from routing_stack import RoutingStack
 
 app = cdk.App()
@@ -8,8 +9,8 @@ RoutingStack(
     app,
     "RoutePlannerStack",
     env=cdk.Environment(
-        account="654654182107",   # your AWS account ID
-        region="us-east-1"        # your AWS region
+        account=os.getenv("CDK_DEFAULT_ACCOUNT"),   # your AWS account ID
+        region=os.getenv("CDK_DEFAULT_REGION")       # your AWS region
     ),
 )
 
