@@ -1,0 +1,15 @@
+name: Trigger App to Send Mail
+
+on:
+  schedule:
+    - cron: '25 22 * * *'  # 01:25 AM Finland (22:25 UTC)
+  workflow_dispatch:        # Optional manual trigger
+
+jobs:
+  call-api:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Call API endpoint
+        run: |
+          curl -X GET "https://q5csqlule0.execute-api.us-east-1.amazonaws.com/prod/journeys?origin=Aalto-yliopisto&destination=Keilaniemi&arriveBy=20250911084500"
