@@ -5,6 +5,7 @@ COPY app.py ${LAMBDA_TASK_ROOT}
 
 # Install dependencies if needed
 COPY requirements-cdk.txt .
+
 RUN pip install -r requirements-cdk.txt --target "${LAMBDA_TASK_ROOT}"
 
 # Command to run the Lambda function
