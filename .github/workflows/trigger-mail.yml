@@ -3,7 +3,7 @@ name: Trigger App to Send Mail
 on:
   schedule:
     - cron: '*/5 * * * *'  # every 5 minutes
-  workflow_dispatch:       # Optional manual trigger
+  #workflow_dispatch:       # Optional manual trigger
 
 jobs:
   call-api:
