@@ -1,0 +1,29 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Route Planner API
+
+Resources:
+  JourneyServiceFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      PackageType: Image
+      ImageUri: samcli/journeyservicefunction:rapid-1.0
+      Environment:
+        Variables:
+          DIGITRANSIT_API_KEY: e5918fdccafe4f3fa8026cfb53180762
+          FROM_EMAIL: kaaira1012@gmail.com
+          TO_EMAIL: sushil16.in@gmail.com
+          GMAIL_APP_PASSWORD: rstobrlmutsyzosg
+          GEO_CODING_URL: https://api.digitransit.fi/geocoding/v1/search
+          ROUTING_URL: https://api.digitransit.fi/routing/v2/hsl/gtfs/v1
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /journeys
+            Method: get
+    Metadata:
+      Dockerfile: Dockerfile
+      DockerContext: .
+      DockerTag: rapid-1.0
+      DockerBuildArgs: {}

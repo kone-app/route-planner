@@ -1,0 +1,7 @@
+aws-lambda-powertools
+requests
+python-dotenv
+aws_xray_sdk
+pytest
+aws-cdk-lib>=2.0.0
+constructs>=10.0.0

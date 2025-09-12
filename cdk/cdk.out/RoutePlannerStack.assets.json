@@ -1,0 +1,37 @@
+{
+  "version": "48.0.0",
+  "files": {
+    "aacc84ef8a6c190e6db83b1856ee720087c8767c88a0f1bfa754428fd13be337": {
+      "displayName": "RoutePlannerStack Template",
+      "source": {
+        "path": "RoutePlannerStack.template.json",
+        "packaging": "file"
+      },
+      "destinations": {
+        "891376978717-us-east-1-e316ef4e": {
+          "bucketName": "cdk-hnb659fds-assets-891376978717-us-east-1",
+          "objectKey": "aacc84ef8a6c190e6db83b1856ee720087c8767c88a0f1bfa754428fd13be337.json",
+          "region": "us-east-1",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::891376978717:role/cdk-hnb659fds-file-publishing-role-891376978717-us-east-1"
+        }
+      }
+    }
+  },
+  "dockerImages": {
+    "f721f7eeae57d86c44bc8bfa2ad7a88983182f02b02c5120f6559fa4c052d1d0": {
+      "displayName": "JourneyServiceFunction/AssetImage",
+      "source": {
+        "directory": "asset.f721f7eeae57d86c44bc8bfa2ad7a88983182f02b02c5120f6559fa4c052d1d0",
+        "dockerFile": "Dockerfile"
+      },
+      "destinations": {
+        "891376978717-us-east-1-ba470004": {
+          "repositoryName": "cdk-hnb659fds-container-assets-891376978717-us-east-1",
+          "imageTag": "f721f7eeae57d86c44bc8bfa2ad7a88983182f02b02c5120f6559fa4c052d1d0",
+          "region": "us-east-1",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::891376978717:role/cdk-hnb659fds-image-publishing-role-891376978717-us-east-1"
+        }
+      }
+    }
+  }
+}

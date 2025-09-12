@@ -1,0 +1,357 @@
+{
+ "Resources": {
+  "JourneyServiceFunctionServiceRole85970F3A": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "RoutePlannerStack/JourneyServiceFunction/ServiceRole/Resource"
+   }
+  },
+  "JourneyServiceFunction6CDECA2C": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "ImageUri": {
+      "Fn::Sub": "891376978717.dkr.ecr.us-east-1.${AWS::URLSuffix}/cdk-hnb659fds-container-assets-891376978717-us-east-1:f721f7eeae57d86c44bc8bfa2ad7a88983182f02b02c5120f6559fa4c052d1d0"
+     }
+    },
+    "MemorySize": 512,
+    "PackageType": "Image",
+    "Role": {
+     "Fn::GetAtt": [
+      "JourneyServiceFunctionServiceRole85970F3A",
+      "Arn"
+     ]
+    },
+    "Timeout": 30
+   },
+   "DependsOn": [
+    "JourneyServiceFunctionServiceRole85970F3A"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "RoutePlannerStack/JourneyServiceFunction/Resource",
+    "aws:asset:path": "asset.f721f7eeae57d86c44bc8bfa2ad7a88983182f02b02c5120f6559fa4c052d1d0",
+    "aws:asset:dockerfile-path": "Dockerfile",
+    "aws:asset:property": "Code.ImageUri"
+   }
+  },
+  "JourneyApiCD274872": {
+   "Type": "AWS::ApiGateway::RestApi",
+   "Properties": {
+    "Name": "JourneyApi"
+   },
+   "Metadata": {
+    "aws:cdk:path": "RoutePlannerStack/JourneyApi/Resource"
+   }
+  },
+  "JourneyApiCloudWatchRoleD68D9521": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "apigateway.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs"
+       ]
+      ]
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "RoutePlannerStack/JourneyApi/CloudWatchRole/Resource"
+   }
+  },
+  "JourneyApiAccountD0B8DFDE": {
+   "Type": "AWS::ApiGateway::Account",
+   "Properties": {
+    "CloudWatchRoleArn": {
+     "Fn::GetAtt": [
+      "JourneyApiCloudWatchRoleD68D9521",
+      "Arn"
+     ]
+    }
+   },
+   "DependsOn": [
+    "JourneyApiCD274872"
+   ],
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "RoutePlannerStack/JourneyApi/Account"
+   }
+  },
+  "JourneyApiDeployment9C2B8EA46348a074d830b39afb0efbfcf3d66aed": {
+   "Type": "AWS::ApiGateway::Deployment",
+   "Properties": {
+    "Description": "Automatically created by the RestApi construct",
+    "RestApiId": {
+     "Ref": "JourneyApiCD274872"
+    }
+   },
+   "DependsOn": [
+    "JourneyApijourneysGETB3CB5C1D",
+    "JourneyApijourneysA093ADDF"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "RoutePlannerStack/JourneyApi/Deployment/Resource",
+    "aws:cdk:do-not-refactor": true
+   }
+  },
+  "JourneyApiDeploymentStageprodA7D9FB0D": {
+   "Type": "AWS::ApiGateway::Stage",
+   "Properties": {
+    "DeploymentId": {
+     "Ref": "JourneyApiDeployment9C2B8EA46348a074d830b39afb0efbfcf3d66aed"
+    },
+    "RestApiId": {
+     "Ref": "JourneyApiCD274872"
+    },
+    "StageName": "prod"
+   },
+   "DependsOn": [
+    "JourneyApiAccountD0B8DFDE"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "RoutePlannerStack/JourneyApi/DeploymentStage.prod/Resource"
+   }
+  },
+  "JourneyApijourneysA093ADDF": {
+   "Type": "AWS::ApiGateway::Resource",
+   "Properties": {
+    "ParentId": {
+     "Fn::GetAtt": [
+      "JourneyApiCD274872",
+      "RootResourceId"
+     ]
+    },
+    "PathPart": "journeys",
+    "RestApiId": {
+     "Ref": "JourneyApiCD274872"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "RoutePlannerStack/JourneyApi/Default/journeys/Resource"
+   }
+  },
+  "JourneyApijourneysGETApiPermissionRoutePlannerStackJourneyApi79DBE246GETjourneys013957A0": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "JourneyServiceFunction6CDECA2C",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:us-east-1:891376978717:",
+       {
+        "Ref": "JourneyApiCD274872"
+       },
+       "/",
+       {
+        "Ref": "JourneyApiDeploymentStageprodA7D9FB0D"
+       },
+       "/GET/journeys"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "RoutePlannerStack/JourneyApi/Default/journeys/GET/ApiPermission.RoutePlannerStackJourneyApi79DBE246.GET..journeys"
+   }
+  },
+  "JourneyApijourneysGETApiPermissionTestRoutePlannerStackJourneyApi79DBE246GETjourneys789A083B": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "JourneyServiceFunction6CDECA2C",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:us-east-1:891376978717:",
+       {
+        "Ref": "JourneyApiCD274872"
+       },
+       "/test-invoke-stage/GET/journeys"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "RoutePlannerStack/JourneyApi/Default/journeys/GET/ApiPermission.Test.RoutePlannerStackJourneyApi79DBE246.GET..journeys"
+   }
+  },
+  "JourneyApijourneysGETB3CB5C1D": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "AuthorizationType": "NONE",
+    "HttpMethod": "GET",
+    "Integration": {
+     "IntegrationHttpMethod": "POST",
+     "Type": "AWS_PROXY",
+     "Uri": {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":apigateway:us-east-1:lambda:path/2015-03-31/functions/",
+        {
+         "Fn::GetAtt": [
+          "JourneyServiceFunction6CDECA2C",
+          "Arn"
+         ]
+        },
+        "/invocations"
+       ]
+      ]
+     }
+    },
+    "ResourceId": {
+     "Ref": "JourneyApijourneysA093ADDF"
+    },
+    "RestApiId": {
+     "Ref": "JourneyApiCD274872"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "RoutePlannerStack/JourneyApi/Default/journeys/GET/Resource"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/01PW07DMBA8S/+dhaZcIFAhIYGowgGqrbOEbeKH/FAVWbk7dgJqvnZmdjw7rqHeP8HjDm++kt1QjXyB9BVQDiJL5zSiunQI6WjkQO5NYU+vUcvARouXb73FJ3KKvc9sFowKUmtGKosyZ0HSndF7Ch42YU1Ryg5assZzMG56Rk8CLfcY6IYTpPelREs+NJaXxDtspDRRB3EkO5pJUYZZ3bD8mX6psYL81EQnaTnyT/4yV/xB4cd0RVrRPN99S90SxLovjs8YbAyzOE3ZqR8OsK/hsLt65srlVqwI2nX+AhaCnABpAQAA"
+   },
+   "Metadata": {
+    "aws:cdk:path": "RoutePlannerStack/CDKMetadata/Default"
+   }
+  }
+ },
+ "Outputs": {
+  "JourneyApiEndpointDEEE7244": {
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      "https://",
+      {
+       "Ref": "JourneyApiCD274872"
+      },
+      ".execute-api.us-east-1.",
+      {
+       "Ref": "AWS::URLSuffix"
+      },
+      "/",
+      {
+       "Ref": "JourneyApiDeploymentStageprodA7D9FB0D"
+      },
+      "/"
+     ]
+    ]
+   }
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}

@@ -1,0 +1,75 @@
+# ------------------------------------------------------------------
+# AWS SAM build artifacts
+# ------------------------------------------------------------------
+.aws-sam/
+
+# SAM deployment config
+samconfig.toml
+
+# ------------------------------------------------------------------
+# Python
+# ------------------------------------------------------------------
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pyd.*
+*.so
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+.venv*/
+pip-wheel-metadata/
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.pytest_cache/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+*.hypothesis/
+
+# ------------------------------------------------------------------
+# Docker
+# ------------------------------------------------------------------
+# Docker build cache
+*.tar
+*.img
+*.sif
+
+# Local env override for container builds
+.env.local
+.dockerignore
+
+# ------------------------------------------------------------------
+# Secrets / Env files (never push!)
+# ------------------------------------------------------------------
+.env
+.env.*
+!.env.example   # keep only sanitized example file
+
+# ------------------------------------------------------------------
+# IDE / OS specific
+# ------------------------------------------------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ------------------------------------------------------------------
+# Logs
+# ------------------------------------------------------------------
+*.log
+logs/
