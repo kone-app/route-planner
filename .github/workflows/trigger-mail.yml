@@ -13,4 +13,4 @@ jobs:
     steps:
       - name: Call API endpoint
         run: |
-          curl -X GET "https://j2o21w4is7.execute-api.us-east-1.amazonaws.com/prod/journeys?origin=Aalto-yliopisto&destination=Keilaniemi&arriveBy=20250911084500"
+          curl -X GET "https://j2o21w4is7.execute-api.us-east-1.amazonaws.com/prod/journeys?origin=Aalto-yliopisto&destination=Kone-Building&arriveBy=20250911084500"
