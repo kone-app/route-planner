@@ -46,7 +46,7 @@ def test_lambda_handler_valid(monkeypatch):
     body = json.loads(result["body"])
 
     assert result["statusCode"] == 200
-    assert "Journeys" in body["message"]
+    assert "Journeys" in body
     assert body["message"]["Email Status"] == "Sent"
 
 
