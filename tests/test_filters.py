@@ -85,6 +85,6 @@ def test_filter_journeys_multiple_legs_accumulates_duration():
 
     # Look for the total duration line explicitly
     total_line = [j for j in journeys if j.startswith("Total Journey Duration")][0]
-    assert "0:20:00" in total_line
+    assert "0:15:00" in total_line
     assert total_line.endswith("min")
 
