@@ -36,6 +36,8 @@ A serverless route-planning API built on **AWS Lambda**, **API Gateway**, and **
 
 ## Route Planner Sequence Diagram
 
+![Sequence Diagram](docs/sequence.png)
+
 ```mermaid
 sequenceDiagram
     participant U as User
@@ -157,6 +159,8 @@ This provisions:
 ---
 
 ## CI/CD Pipeline
+
+![CI/CD Workflow](docs/cicd.png)
 
 ```mermaid
 flowchart LR
