@@ -37,6 +37,8 @@ def get_journeys():
         metrics.add_metric(name="JourneyEmailsSent", unit=MetricUnit.Count, value=1)
         return {"statusCode": 200, "body": json.dumps({"message": result})}
 
+    
+
     except Exception as e:
         logger.exception("Error processing request")
         return {"statusCode": 500, "body": json.dumps({"error": str(e)})}
