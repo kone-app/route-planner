@@ -1,6 +1,6 @@
 # Route Planner API
 
-A serverless route-planning API built on **AWS Lambda**, **API Gateway**, and **AWS CDK**, integrating with the **HSL Digitransit API** to provide journey options, apply filters, and send email notifications.
+A serverless route-planning API built on **AWS Lambda**, **API Gateway**, and **AWS CDK**, integrating with the **HSL Digitransit API** to provide journey options and send email notifications.
 
 ---
 
@@ -24,12 +24,12 @@ A serverless route-planning API built on **AWS Lambda**, **API Gateway**, and **
 | API Gateway | -----> | AWS Lambda (Docker)| -----> | Digitransit|
 |  /journeys  |        |  Journey Service   |        |   API      |
 +-------------+        +--------------------+        +------------+
-                            |       |
-                            v       v
-                        Filters   Notifier
-                                    |
-                                    v
-                                  Email
+                           ^  |       |
+                           |  v       v
+                         Filters   Notifier
+                                      |
+                                      v
+                                    Email
 ```
 
 ---
@@ -49,7 +49,7 @@ sequenceDiagram
     APIGW->>L: Invoke Lambda (handler)
     L->>D: Query routes (GraphQL)
     D-->>L: Journeys response
-    L->>F: Apply business filters
+    L->>F: Apply Journey filters
     F-->>L: Filtered journeys
     L->>N: Send journey email
     N-->>L: Email status (Sent/Failed)
@@ -232,12 +232,12 @@ Response:
 ## Standards & Best Practices
 
 - Follows PEP8 naming (`latest_arrival` not `latestArrival`)  
-- 100% unit test coverage with pytest  
-- Secrets handled via **AWS KMS / Secrets Manager**  
+- 80% unit test coverage with pytest  
+- Secrets handled via **GITHUB Secret ( AWS KMS or Secrets Manager or etc can also be used )**  
 
 ---
 
-## Next Action Item Roadmap
+## Future Improvement If Needed
 
 - [ ] Add GraphQL support  
 - [ ] Persist journey history in DynamoDB  
