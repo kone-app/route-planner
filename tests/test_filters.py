@@ -14,7 +14,6 @@ def make_leg(start_dt, end_dt, mode="BUS", from_name="Origin", to_name="Destinat
         "duration": duration if duration is not None else int((end_dt - start_dt).total_seconds()),
     }
 
-
 def test_filter_journeys_sorts_and_replaces_origin_destination():
     now = datetime(2025, 9, 13, 7, 30, 0)
     result = {
