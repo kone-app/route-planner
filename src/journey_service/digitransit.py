@@ -20,24 +20,39 @@ def query_journeys(origin_coordinates, destination_coordinates, arriveBy):
     destination = f"destination: {{ location: {{ coordinate: {{ latitude: {destination_coordinates[1]}, longitude: {destination_coordinates[0]} }} }} }}"
     latestArrival = '"' + datetime.strptime(arriveBy, "%Y%m%d%H%M%S").strftime("%Y-%m-%dT%H:%M:%S+03:00") + '"'
 
-    query = f"""
-    {{
-        planConnection({origin} {destination} first: 5 dateTime: {{ latestArrival: {latestArrival} }}) {{
-            edges {{
-                node {{
-                    start
-                    legs {{
-                        from {{ name }}
-                        to {{ name }}
-                        end {{ scheduledTime }}
-                        mode
-                        duration
-                    }}
-                }}
-            }}
-        }}
-    }}
-    """
+    query = """
+    {
+        planConnection("""+ origin + destination +"""    first: 10
+            dateTime:  {
+            latestArrival: """ + latestArrival + """
+            }
+        ) {
+        edges {
+            node {
+                start
+                end
+                legs {
+                    from {
+                        name
+                    }
+                    to {
+                        name
+                    }
+                    start {
+                        scheduledTime
+                    }
+                    end {
+                        scheduledTime
+                        }
+                    mode
+                    duration
+                    realtimeState
+                    }
+                }
+            }
+        }
+    }"""
+
 
     routing_url = "https://api.digitransit.fi/routing/v2/hsl/gtfs/v1"
     #routing_url = ROUTING_URL
