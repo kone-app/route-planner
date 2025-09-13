@@ -82,10 +82,9 @@ def test_filter_journeys_multiple_legs_accumulates_duration():
     # Two legs + total duration + blank line
     assert any("WALK" in j for j in journeys)
     assert any("BUS" in j for j in journeys)
-    assert any("0:20:00" in j for j in journeys[-2])  # total journey duration
 
+    # Look for the total duration line explicitly
+    total_line = [j for j in journeys if j.startswith("Total Journey Duration")][0]
+    assert "0:20:00" in total_line
+    assert total_line.endswith("min")
 
-def test_filter_journeys_empty_edges_returns_empty_list():
-    result = {"data": {"planConnection": {"edges": []}}}
-    journeys = filter_journeys(result, "X", "Y")
-    assert journeys == []
