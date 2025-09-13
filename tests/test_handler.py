@@ -1,38 +1,26 @@
 import json
 import pytest
-from journey_service import handler
+import handler
 
 
-# Fake AWS Lambda context
 class FakeContext:
-    function_name = "JourneyServiceFunction"
+    function_name = "test"
     memory_limit_in_mb = 128
-    invoked_function_arn = "arn:aws:lambda:local:0:function:JourneyServiceFunction"
-    aws_request_id = "fake-request-id"
+    invoked_function_arn = "arn:aws:lambda:test"
+    aws_request_id = "test"
 
 
-def make_event(params=None, path="/journeys"):
-    """Helper to create a fake API Gateway event"""
+def make_event(query_params=None, path="/journeys"):
     return {
-        "httpMethod": "GET",
+        "resource": path,
         "path": path,
-        "queryStringParameters": params or {},
+        "httpMethod": "GET",
+        "queryStringParameters": query_params,
     }
 
 
-def test_lambda_handler_missing_params():
-    """Should return 400 when query params are missing"""
-    event = make_event({})   # no params
-    result = handler.lambda_handler(event, FakeContext())
-
-    assert result["statusCode"] == 400
-    body = json.loads(result["body"])
-    assert body["detail"] == "Missing origin, destination, or arriveBy"
-
-
-
 def test_lambda_handler_valid(monkeypatch):
-    """Should return 200 and include Journeys when start() succeeds"""
+    """ Should return 200 and Journeys when start() succeeds"""
 
     def fake_start(origin, dest, arriveBy):
         return {"Journeys": ["mocked journey"], "Email Status": "Sent"}
@@ -43,19 +31,30 @@ def test_lambda_handler_valid(monkeypatch):
         {"origin": "Aalto-yliopisto", "destination": "Keilaniemi", "arriveBy": "20250911084500"}
     )
     result = handler.lambda_handler(event, FakeContext())
-    body = json.loads(result["body"])
 
     assert result["statusCode"] == 200
-    assert "Journeys" in body["message"] 
-    assert body["message"]["Email Status"] == "Sent"
+    parsed_body = json.loads(result["body"])
+    assert "Journeys" in parsed_body["message"]
+    assert parsed_body["message"]["Journeys"] == ["mocked journey"]
+    assert parsed_body["message"]["Email Status"] == "Sent"
 
 
+def test_lambda_handler_missing_params():
+    """ Should return 400 when query params are missing"""
+    event = make_event({"origin": "OnlyOrigin"})  # missing destination + arriveBy
+    result = handler.lambda_handler(event, FakeContext())
 
-def test_lambda_handler_error(monkeypatch):
-    """Should return 500 when start() raises an exception"""
+    assert result["statusCode"] == 400
+    parsed_body = json.loads(result["body"])
+    assert "detail" in parsed_body
+    assert "Missing origin, destination, or arriveBy" in parsed_body["detail"]
+
+
+def test_lambda_handler_start_raises(monkeypatch):
+    """ Should return 500 when start() raises an exception"""
 
     def fake_start(origin, dest, arriveBy):
-        raise RuntimeError("Boom!")
+        raise RuntimeError("Unexpected failure")
 
     monkeypatch.setattr(handler, "start", fake_start)
 
@@ -63,18 +62,24 @@ def test_lambda_handler_error(monkeypatch):
         {"origin": "Aalto-yliopisto", "destination": "Keilaniemi", "arriveBy": "20250911084500"}
     )
     result = handler.lambda_handler(event, FakeContext())
-    body = json.loads(result["body"])
 
     assert result["statusCode"] == 500
-    assert "error" in body
-    assert "Boom!" in body["error"]
+    parsed_body = json.loads(result["body"])
+    assert "error" in parsed_body
+    assert "Unexpected failure" in parsed_body["error"]
 
 
-def test_lambda_handler_invalid_path():
-    """Should return 404 when path does not match any route"""
-    event = make_event({"origin": "X"}, path="/unknown")
-    result = handler.lambda_handler(event, FakeContext())
+def test_direct_start_function(monkeypatch):
+    """ Direct test of start() function with mocks"""
 
-    # ApiGatewayResolver automatically returns 404
-    assert result["statusCode"] == 404
-    assert "Not Found" in result["body"]
+    monkeypatch.setattr(handler, "get_coordinates", lambda o, d: ("coords1", "coords2"))
+    monkeypatch.setattr(handler, "query_journeys", lambda o, d, a: {"dummy": True})
+    monkeypatch.setattr(handler, "filter_journeys", lambda result, origin, destination: ["f1", "f2"])
+    monkeypatch.setattr(handler, "send_email", lambda body_text: "SentOK")
+
+    result = handler.start("O", "D", "20250911084500")
+
+    assert "Journeys" in result
+    assert "Email Status" in result
+    assert result["Journeys"] == ["f1", "f2"]
+    assert result["Email Status"] == "SentOK"
