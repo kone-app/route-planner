@@ -62,19 +62,38 @@ sequenceDiagram
 ## Route Planneer Project Structure
 
 ```
-route-planner-main/
-├── src/journey_service/
-│   ├── handler.py       # Lambda entrypoint
-│   ├── digitransit.py   # Query Digitransit API
-│   ├── filters.py       # Journey filtering logic
-│   ├── notifier.py      # Email sending
-│   └── utils.py         # Helpers
-├── cdk/                 # AWS CDK stack
-├── tests/               # Pytest unit tests
-├── Dockerfile           # Lambda container
-├── template.yaml        # SAM template
-├── requirements.txt     # Python dependencies
-└── .github/workflows/   # GitHub Actions (CI/CD)
+route-planner/
+├── cdk/                                # Infrastructure as Code (AWS CDK, IaC demo only)
+│   ├── app.py
+│   └── routing_stack.py                # API Gateway + Lambda definition
+│
+├── src/
+│   └── journey_service/                # Core service logic
+│       ├── __init__.py
+│       ├── handler.py                  # Lambda entrypoint (Powertools)
+│       ├── digitransit.py              # get_coordinates, query_journeys
+│       ├── filters.py                  # filter_journeys
+│       ├── notifier.py                 # send_email
+│       ├── utils.py                    # time conversions
+│       └── config.py                   # loads .env.{env} for dev/demo/preprod
+│
+├── tests/                              # Unit tests with pytest
+│   ├── test_digitransit.py
+│   ├── test_filters.py
+│   └── test_handler.py
+│
+├── .env.dev                            # Local developer testing
+├── .env.demo                           # Demo environment
+├── .env.preprod                        # Pre-production/staging
+│
+├── sonar-project.properties             # SonarQube config
+├── requirements.txt                     # Python dependencies
+├── template.yaml                        # SAM template (run locally with `sam local start-api`)
+├── README.md                            # Documentation (setup, curl examples, diagrams)
+│
+└── .github/
+    └── workflows/
+        └── ci-cd.yml                   # GitHub Actions CI/CD (build, test, sonar, deploy local/demo)
 ```
 
 ---
@@ -111,7 +130,7 @@ sam local start-api
 Test locally:
 
 ```
-http://127.0.0.1:3000/journeys?origin=Aalto-yliopisto&destination=Keilaniemi&arriveBy=20250911084500
+http://127.0.0.1:3000/journeys?origin=Aalto-yliopisto&destination=Kone-Building&arriveBy=20250911084500
 ```
 
 ---
@@ -169,7 +188,7 @@ flowchart LR
 ## Example API Call
 
 ```bash
-curl -X GET   "https://<api-id>.execute-api.<region>.amazonaws.com/prod/journeys?origin=Aalto-yliopisto&destination=Keilaniemi&arriveBy=20250911084500"
+curl -X GET   "https://<api-id>.execute-api.<region>.amazonaws.com/prod/journeys?origin=Aalto-yliopisto&destination=Kone-Building&arriveBy=20250911084500"
 ```
 
 Response:
