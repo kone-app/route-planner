@@ -23,5 +23,4 @@ def filter_journeys(result, origin, destination):
             journey_duration += duration
         journeys.append("Total Journey Duration = " + str(timedelta(seconds=journey_duration))+" min")
         journeys.append("")
-
-    return journeys
+    return journeys
