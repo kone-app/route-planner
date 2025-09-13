@@ -210,6 +210,14 @@ Response:
 - [ ] Multi-channel notifications (SMS, Slack, Teams)  
 
 ---
+## Reading material
+# Following links might help you:
+
+* https://digitransit.fi/en/developers/apis/1-routing-api/itinerary-planning/
+* https://digitransit.fi/en/developers/apis/1-routing-api/stops/
+* https://powertools.aws.dev/
+
+---
 
 ## Contributors
 - **Sushil Kumar** – Architect & Developer  
