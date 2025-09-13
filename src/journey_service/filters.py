@@ -18,7 +18,7 @@ def filter_journeys(result, origin, destination):
             to_loc = j['to']['name']
             if to_loc == "Destination":
                 to_loc = destination
-            journey = from_loc + ":"+start_time + " " + to_loc + ":"+end_time + " " + j['mode'] + " " + str(timedelta(seconds=duration))+" min"
+            journey = from_loc + ":"+start_time + "  --TO-->  " + to_loc + ":"+end_time + "  BY-->  " + j['mode'] + " " + str(timedelta(seconds=duration))+" min"
             journeys.append(journey)
             journey_duration += duration
         journeys.append("Total Journey Duration = " + str(timedelta(seconds=journey_duration))+" min")
