@@ -177,24 +177,6 @@ Response:
 {
   "message": {
     "Journeys": [
-      {
-        "duration_min": 9,
-        "departure": "09:30",
-        "arrival": "09:39",
-        "legs": [
-          {"mode": "BUS", "from": "Aalto-yliopisto (M)", "to": "Otaranta"},
-          {"mode": "WALK", "from": "Otaranta", "to": "Keilaniemi"}
-        ]
-      }
-    ],
-    "Email Status": "Sent"
-  }
-}
-
-EMAIL: 
-{
-  "message": {
-    "Journeys": [
       "Aalto-yliopisto:08:19:52  --TO-->  Aalto-yliopisto (M):08:22:00  BY-->  WALK 0:02:08 min",
       "Aalto-yliopisto (M):08:22:00  --TO-->  Keilaniemi:08:24:00  BY-->  SUBWAY 0:02:00 min",
       "Keilaniemi:08:24:00  --TO-->  Kone-Building:08:31:27  BY-->  WALK 0:07:27 min",
@@ -253,5 +235,5 @@ EMAIL:
 
 ---
 
-## Contributors
+## Contributor
 - **Sushil Kumar** – Architect & Developer  
