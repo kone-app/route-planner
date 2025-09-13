@@ -30,7 +30,7 @@ def test_filter_journeys_sorts_correctly():
         }
     }
 
-    journeys = filter_journeys(result)
+    journeys = filter_journeys(result, "origin", "destination")
     assert len(journeys) == 2
     # Check sorting by earliest start
     assert "Stop B" in journeys[0]

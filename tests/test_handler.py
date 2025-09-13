@@ -33,7 +33,7 @@ def test_lambda_handler_valid(monkeypatch):
             "arriveBy": "20250911084500",
         }
     }
-    result = handler.lambda_handler(event, FakeContext())  # 👈 pass FakeContext
+    result = handler.lambda_handler(event, FakeContext())  #  pass FakeContext
     body = json.loads(result["body"])
     assert result["statusCode"] == 200
     assert "Journeys" in body["message"]
