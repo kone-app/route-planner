@@ -2,6 +2,7 @@ import json
 from aws_lambda_powertools import Logger, Tracer, Metrics
 from aws_lambda_powertools.metrics import MetricUnit
 from aws_lambda_powertools.event_handler.api_gateway import ApiGatewayResolver
+from aws_lambda_powertools.event_handler.exceptions import BadRequestError
 
 from .digitransit import get_coordinates, query_journeys
 from .filters import filter_journeys
@@ -29,10 +30,8 @@ def get_journeys():
         arriveBy = app.current_event.get_query_string_value("arriveBy")
 
         if not origin or not destination or not arriveBy:
-            return {
-                "statusCode": 400,
-                "body": json.dumps({"error": "Missing origin, destination, or arriveBy"})
-            }
+            # Instead of returning dict, raise proper HTTP error
+            raise BadRequestError("Missing origin, destination, or arriveBy")
 
         result = start(origin, destination, arriveBy)
         metrics.add_metric(name="JourneyEmailsSent", unit=MetricUnit.Count, value=1)
@@ -41,7 +40,7 @@ def get_journeys():
     except Exception as e:
         logger.exception("Error processing request")
         return {"statusCode": 500, "body": json.dumps({"error": str(e)})}
-        
+
 # Lambda entrypoint
 @logger.inject_lambda_context
 @tracer.capture_lambda_handler
