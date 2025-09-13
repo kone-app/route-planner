@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from .utils import format_arrival_time
 
 def filter_journeys(result, origin, destination):
