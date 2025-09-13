@@ -26,13 +26,13 @@ def query_journeys(origin_coordinates, destination_coordinates, arriveBy):
     elif arriveBy.weekday() == 6:
         arriveBy += timedelta(days=1)
 
-    latestArrival = '"' + arriveBy.strftime("%Y-%m-%dT%H:%M:%S+03:00") + '"'
+    latest_arrival = '"' + arriveBy.strftime("%Y-%m-%dT%H:%M:%S+03:00") + '"'
 
     query = """
     {
         planConnection("""+ origin + destination +"""    first: 10
             dateTime:  {
-            latestArrival: """ + latestArrival + """
+            latestArrival: """ + latest_arrival + """
             }
         ) {
         edges {
@@ -63,7 +63,6 @@ def query_journeys(origin_coordinates, destination_coordinates, arriveBy):
 
 
     routing_url = "https://api.digitransit.fi/routing/v2/hsl/gtfs/v1"
-    #routing_url = ROUTING_URL
     response = requests.post(
         url=routing_url,
         headers={"Content-Type": "application/json", "digitransit-subscription-key": API_KEY},
