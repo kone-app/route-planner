@@ -13,7 +13,7 @@ metrics = Metrics(namespace="JourneyNotification", service="JourneyService")
 def start(origin, destination, arriveBy):
     origin_coordinates, destination_coordinates = get_coordinates(origin, destination)
     api_response = query_journeys(origin_coordinates, destination_coordinates, arriveBy)
-    journeys = filter_journeys(result=api_response, origin, destination)
+    journeys = filter_journeys(result=api_response, origin=origin, destination=destination)
     email_status = send_email(body_text=journeys)
     return {"Journeys": journeys, "Email Status": email_status}
 
