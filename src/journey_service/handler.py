@@ -3,6 +3,7 @@ from aws_lambda_powertools import Logger, Tracer, Metrics
 from aws_lambda_powertools.metrics import MetricUnit
 from aws_lambda_powertools.event_handler.api_gateway import ApiGatewayResolver
 from aws_lambda_powertools.event_handler.exceptions import BadRequestError
+from aws_lambda_powertools.event_handler.api_gateway import Response
 
 from .digitransit import get_coordinates, query_journeys
 from .filters import filter_journeys
@@ -38,10 +39,11 @@ def get_journeys():
 
 @app.exception_handler(BadRequestError)
 def handle_bad_request(ex: BadRequestError):
-    return {
-        "statusCode": 400,
-        "body": json.dumps({"detail": str(ex)})
-    }
+    return Response(
+        status_code=400,
+        content_type="application/json",
+        body=json.dumps({"detail": str(ex)})
+    )
 
 
 # Lambda entrypoint
