@@ -36,6 +36,13 @@ def get_journeys():
         metrics.add_metric(name="JourneyEmailsSent", unit=MetricUnit.Count, value=1)
         return {"statusCode": 200, "body": json.dumps({"message": result})}
 
+@app.exception_handler(BadRequestError)
+def handle_bad_request(ex: BadRequestError):
+    return {
+        "statusCode": 400,
+        "body": json.dumps({"detail": str(ex)})
+    }
+
 
 # Lambda entrypoint
 @logger.inject_lambda_context
