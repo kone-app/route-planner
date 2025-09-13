@@ -1,6 +1,6 @@
 import json
 import pytest
-import handler
+from journey_service import handler
 
 
 class FakeContext:
