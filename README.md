@@ -190,6 +190,40 @@ Response:
     "Email Status": "Sent"
   }
 }
+
+EMAIL: 
+{
+  "message": {
+    "Journeys": [
+      "Aalto-yliopisto:08:19:52  --TO-->  Aalto-yliopisto (M):08:22:00  BY-->  WALK 0:02:08 min",
+      "Aalto-yliopisto (M):08:22:00  --TO-->  Keilaniemi:08:24:00  BY-->  SUBWAY 0:02:00 min",
+      "Keilaniemi:08:24:00  --TO-->  Kone-Building:08:31:27  BY-->  WALK 0:07:27 min",
+      "Total Journey Duration = 0:11:35 min",
+      "",
+      "Aalto-yliopisto:08:23:52  --TO-->  Aalto-yliopisto (M):08:26:00  BY-->  WALK 0:02:08 min",
+      "Aalto-yliopisto (M):08:26:00  --TO-->  Keilaniemi:08:28:00  BY-->  SUBWAY 0:02:00 min",
+      "Keilaniemi:08:28:00  --TO-->  Kone-Building:08:35:27  BY-->  WALK 0:07:27 min",
+      "Total Journey Duration = 0:11:35 min",
+      "",
+      "Aalto-yliopisto:08:25:52  --TO-->  Aalto-yliopisto (M):08:28:00  BY-->  WALK 0:02:08 min",
+      "Aalto-yliopisto (M):08:28:00  --TO-->  Keilaniemi:08:30:00  BY-->  SUBWAY 0:02:00 min",
+      "Keilaniemi:08:30:00  --TO-->  Kone-Building:08:37:27  BY-->  WALK 0:07:27 min",
+      "Total Journey Duration = 0:11:35 min",
+      "",
+      "Aalto-yliopisto:08:29:52  --TO-->  Aalto-yliopisto (M):08:32:00  BY-->  WALK 0:02:08 min",
+      "Aalto-yliopisto (M):08:32:00  --TO-->  Keilaniemi:08:34:00  BY-->  SUBWAY 0:02:00 min",
+      "Keilaniemi:08:34:00  --TO-->  Kone-Building:08:41:27  BY-->  WALK 0:07:27 min",
+      "Total Journey Duration = 0:11:35 min",
+      "",
+      "Aalto-yliopisto:08:32:52  --TO-->  Aalto-yliopisto (M):08:35:00  BY-->  WALK 0:02:08 min",
+      "Aalto-yliopisto (M):08:35:00  --TO-->  Keilaniemi:08:37:00  BY-->  SUBWAY 0:02:00 min",
+      "Keilaniemi:08:37:00  --TO-->  Kone-Building:08:44:27  BY-->  WALK 0:07:27 min",
+      "Total Journey Duration = 0:11:35 min",
+      ""
+    ],
+    "Email Status": "Email Sent"
+  }
+}
 ```
 
 ---
