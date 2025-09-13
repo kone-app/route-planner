@@ -23,8 +23,7 @@ def start(origin, destination, arriveBy):
 # Define GET /journeys route
 @app.get("/journeys")
 def get_journeys():
-    try:
-        
+         
         origin = app.current_event.get_query_string_value("origin")
         destination = app.current_event.get_query_string_value("destination")
         arriveBy = app.current_event.get_query_string_value("arriveBy")
@@ -37,11 +36,6 @@ def get_journeys():
         metrics.add_metric(name="JourneyEmailsSent", unit=MetricUnit.Count, value=1)
         return {"statusCode": 200, "body": json.dumps({"message": result})}
 
-    
-
-    except Exception as e:
-        logger.exception("Error processing request")
-        return {"statusCode": 500, "body": json.dumps({"error": str(e)})}
 
 # Lambda entrypoint
 @logger.inject_lambda_context

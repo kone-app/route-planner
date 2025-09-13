@@ -22,12 +22,13 @@ def make_event(params=None, path="/journeys"):
 
 def test_lambda_handler_missing_params():
     """Should return 400 when query params are missing"""
-    event = make_event({})
+    event = make_event({})   # no params
     result = handler.lambda_handler(event, FakeContext())
-    body = json.loads(result["body"])
 
     assert result["statusCode"] == 400
-    assert "error" in body
+    body = json.loads(result["body"])
+    assert body["detail"] == "Missing origin, destination, or arriveBy"
+
 
 
 def test_lambda_handler_valid(monkeypatch):
