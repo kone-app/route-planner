@@ -40,7 +40,8 @@ def get_journeys():
         return {"statusCode": 200, "body": json.dumps({"message": result})}
     except Exception as e:
         logger.error(f"Unexpected error: {e}")
-        return {"statusCode": 500, "body": json.dumps({"error": str(e)})}
+        #return {"statusCode": 500, "body": json.dumps({"error": str(e)})}
+        return {"message": result}
 
 
 @app.exception_handler(BadRequestError)
