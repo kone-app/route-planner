@@ -10,7 +10,7 @@ from .notifier import send_email
 logger = Logger()
 tracer = Tracer()
 metrics = Metrics(namespace="JourneyNotification", service="JourneyService")
-app = ApiGatewayResolver()
+
 
 def start(origin, destination, arriveBy):
     origin_coordinates, destination_coordinates = get_coordinates(origin, destination)
