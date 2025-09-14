@@ -4,7 +4,7 @@ info:
   description: |
     REST API wrapper over Digitransit GraphQL for planning journeys.
     Returns multiple route options (up to 5) between origin and destination.
-    Designed for Andrea’s use case: finding when to leave Aalto Yliopisto
+    Designed for Andrea's use case: finding when to leave Aalto Yliopisto
     to reach Keilaniemi / KONE Building by 08:45 on weekdays.
   version: 1.0.0
 servers:

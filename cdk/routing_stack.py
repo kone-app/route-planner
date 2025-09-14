@@ -6,6 +6,8 @@ from aws_cdk import (
     CfnOutput,
     aws_events as events,
     aws_events_targets as targets,
+    aws_s3 as s3,
+    aws_s3_deployment as s3deploy,
 
 )
 from constructs import Construct
@@ -66,9 +68,42 @@ class RoutingStack(Stack):
             )
             rule.add_target(targets.LambdaFunction(journey_lambda))
 
-            CfnOutput(self, "EventRuleName", value=rule.rule_name)
+        
+        # ----------------------------
+        # S3 bucket for OpenAPI docs
+        # ----------------------------
+        bucket = s3.Bucket(
+            self,
+            "OpenApiDocsBucket",
+            public_read_access=True,  # allow public GET
+            website_index_document="index.html",
+        )
 
+        # Deploy openapi.yml into /docs in bucket
+        s3deploy.BucketDeployment(
+            self,
+            "DeployOpenApi",
+            sources=[s3deploy.Source.asset("./", exclude=["cdk/*", "tests/*", ".venv/*"])],
+            destination_bucket=bucket,
+            destination_key_prefix="docs",  # file will be at /docs/openapi.yml
+        )
+
+        # API Gateway route /docs -> serves openapi.yml from S3
+        docs_resource = api.root.add_resource("docs")
+        docs_resource.add_method(
+            "GET",
+            apigateway.HttpIntegration(
+                f"http://{bucket.bucket_website_domain_name}/docs/openapi.yml"
+            ),
+        )
+
+        # Event Bridge outputs
+        CfnOutput(self, "EventRuleName", value=rule.rule_name)
+
+        # CloudFormation outputs
+        CfnOutput(self, "OpenApiS3Url", value=f"http://{bucket.bucket_website_domain_name}/docs/openapi.yml")
 
         # Output useful info after deploy
         CfnOutput(self, "ApiEndpoint", value=api.url)
         CfnOutput(self, "LambdaName", value=journey_lambda.function_name)
+        

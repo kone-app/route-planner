@@ -2,6 +2,7 @@ import json
 from aws_lambda_powertools import Logger, Tracer, Metrics
 from aws_lambda_powertools.metrics import MetricUnit
 from aws_lambda_powertools.event_handler.api_gateway import ApiGatewayResolver
+from datetime import datetime, timedelta
 
 from .digitransit import get_coordinates, query_journeys
 from .filters import filter_journeys
@@ -13,8 +14,22 @@ metrics = Metrics(namespace="JourneyNotification", service="JourneyService")
 
 
 def start(origin, destination, arriveBy):
+
+    # Parse incoming arriveBy string (yyyyMMddHHmmss)
+    dt = datetime.strptime(arriveBy, "%Y%m%d%H%M%S")
+
+    # If weekend, shift to Monday
+    if dt.weekday() == 5:   # Saturday
+        dt += timedelta(days=2)
+        logger.info("Adjusted arriveBy from Saturday -> Monday")
+    elif dt.weekday() == 6: # Sunday
+        dt += timedelta(days=1)
+        logger.info("Adjusted arriveBy from Sunday -> Monday")
+
+    adjusted_arriveBy = dt.strftime("%Y%m%d%H%M%S")
+
     origin_coordinates, destination_coordinates = get_coordinates(origin, destination)
-    api_response = query_journeys(origin_coordinates, destination_coordinates, arriveBy)
+    api_response = query_journeys(origin_coordinates, destination_coordinates, adjusted_arriveBy)
     journeys = filter_journeys(result=api_response, origin=origin, destination=destination)
     email_status = send_email(body_text=journeys)
     return {"Journeys": journeys, "Email Status": email_status}
