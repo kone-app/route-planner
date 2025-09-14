@@ -100,12 +100,12 @@ class RoutingStack(Stack):
         docs_resource.add_method(
             "GET",
             apigateway.HttpIntegration(
-                f"http://{bucket.bucket_website_domain_name}/docs/openapi.yml"
+                f"http://{bucket.bucket_regional_domain_name}/docs/openapi.yml"
             ),
         )
 
         # CloudFormation outputs
-        CfnOutput(self, "OpenApiS3Url", value=f"http://{bucket.bucket_website_domain_name}/docs/openapi.yml")
+        CfnOutput(self, "OpenApiS3Url", value=f"http://{bucket.bucket_regional_domain_name}/docs/openapi.yml")
 
         # Outputs
         if enable_schedule:  # only output if created
