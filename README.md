@@ -36,8 +36,6 @@ A serverless route-planning API built on **AWS Lambda**, **API Gateway**, and **
 
 ## Route Planner Sequence Diagram
 
-![Sequence Diagram](project-docs/sequence.png)
-
 ```mermaid
 sequenceDiagram
     participant U as User
@@ -159,8 +157,6 @@ This provisions:
 
 ## CI/CD Pipeline
 
-![CI/CD Workflow](project-docs/cicd.png)
-
 ```mermaid
 flowchart LR
     A[GitHub Push] --> B[CI/CD Workflow]
@@ -248,8 +244,7 @@ Response:
 - [ ] Multi-channel notifications (SMS, Slack, Teams)  
 
 ---
-## Reading material
-# Following links might help you:
+## Reading material used
 
 * https://digitransit.fi/en/developers/apis/1-routing-api/itinerary-planning/
 * https://digitransit.fi/en/developers/apis/1-routing-api/stops/
@@ -258,4 +253,4 @@ Response:
 ---
 
 ## Contributor
-- **Sushil Kumar** – Architect & Developer  
+- **Sushil Kumar**  
