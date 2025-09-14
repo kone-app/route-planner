@@ -1,12 +1,13 @@
 from datetime import datetime, timedelta
 from .utils import format_arrival_time
+from .config import JOURNEY_COUNT
 
 def filter_journeys(result, origin, destination):
     journeys = []
     edges = result["data"]["planConnection"]["edges"]
-    sorted_edges = sorted(edges, key=lambda e: datetime.fromisoformat(e["node"]["start"]))[-10:]
-    journeys.append("Route Details :-")
+    sorted_edges = sorted(edges, key=lambda e: datetime.fromisoformat(e["node"]["start"]))[-JOURNEY_COUNT:]
     for i in sorted_edges:
+        journeys.append("Route Details :-")
         journey_duration = 0
         for j in i['node']['legs']:
             start_time = datetime.fromisoformat(j['start']['scheduledTime'].split("+")[0]).strftime("%H:%M:%S")

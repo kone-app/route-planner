@@ -110,6 +110,7 @@ jobs:
           FROM_EMAIL: ${{ secrets.FROM_EMAIL }}
           TO_EMAIL: ${{ secrets.TO_EMAIL }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
-          GEO_CODING_URL: ${{ secrets.GEO_CODING_URL }}
-          ROUTING_URL: ${{ secrets.ROUTING_URL }}
+          GEO_CODING_URL: ${{ vars.GEO_CODING_URL }}
+          ROUTING_URL: ${{ vars.ROUTING_URL }}
+          JOURNEY_COUNT: ${{ vars.JOURNEY_COUNT }}
 

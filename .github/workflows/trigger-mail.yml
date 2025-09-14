@@ -4,7 +4,7 @@ on:
   schedule:
     #- cron: '0 3 * * *'  # mail at 6 AM
     - cron: '*/5 * * * *'  # mail at Every 5 Min
-  #workflow_dispatch:       # Optional manual trigger
+  workflow_dispatch:       # Optional manual trigger
 
 jobs:
   call-api:

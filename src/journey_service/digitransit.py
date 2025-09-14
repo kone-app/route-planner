@@ -62,9 +62,9 @@ def query_journeys(origin_coordinates, destination_coordinates, arriveBy):
     }"""
 
 
-    routing_url = "https://api.digitransit.fi/routing/v2/hsl/gtfs/v1"
+    #routing_url = "https://api.digitransit.fi/routing/v2/hsl/gtfs/v1"
     response = requests.post(
-        url=routing_url,
+        url=ROUTING_URL,
         headers={"Content-Type": "application/json", "digitransit-subscription-key": API_KEY},
         json={"query": query}
     )
