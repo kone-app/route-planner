@@ -5,6 +5,7 @@
 
 # SAM deployment config
 samconfig.toml
+template.yaml
 
 # ------------------------------------------------------------------
 # Python
