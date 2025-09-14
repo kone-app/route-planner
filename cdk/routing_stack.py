@@ -72,14 +72,20 @@ class RoutingStack(Stack):
                 # ----------------------------
         # S3 bucket for OpenAPI docs
         # ----------------------------
-        bucket = s3.Bucket(
+       bucket = s3.Bucket(
             self,
             "OpenApiDocsBucket",
-            public_read_access=True,                     # allow public GET
-            block_public_access=s3.BlockPublicAccess.NONE,  # must disable default block
-            removal_policy=cdk.RemovalPolicy.DESTROY,    # optional: auto-clean in dev
-            auto_delete_objects=True                     # optional: auto-clean in dev
+            public_read_access=True,
+            block_public_access=s3.BlockPublicAccess(
+                block_public_acls=False,
+                ignore_public_acls=False,
+                restrict_public_buckets=False,
+                block_public_policy=False,
+            ),
+            removal_policy=RemovalPolicy.DESTROY,   # clean up in dev
+            auto_delete_objects=True                # clean up in dev
         )
+
 
         # Deploy ONLY openapi.yml into /docs
         s3deploy.BucketDeployment(
