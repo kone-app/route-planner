@@ -13,10 +13,10 @@ tracer = Tracer()
 metrics = Metrics(namespace="JourneyNotification", service="JourneyService")
 
 
-def start(origin, destination, arriveBy):
+def start(origin, destination, arrive_by):
 
-    # Parse incoming arriveBy string (yyyyMMddHHmmss)
-    dt = datetime.strptime(arriveBy, "%Y%m%d%H%M%S")
+    # Parse incoming arrive_by string (yyyyMMddHHmmss)
+    dt = datetime.strptime(arrive_by, "%Y%m%d%H%M%S")
 
     # If weekend, shift to Monday
     if dt.weekday() == 5:   # Saturday
@@ -26,10 +26,10 @@ def start(origin, destination, arriveBy):
         dt += timedelta(days=1)
         logger.info("Adjusted arriveBy from Sunday -> Monday")
 
-    arriveBy = dt.strftime("%Y%m%d%H%M%S")
+    arrive_by = dt.strftime("%Y%m%d%H%M%S")
 
     origin_coordinates, destination_coordinates = get_coordinates(origin, destination)
-    api_response = query_journeys(origin_coordinates, destination_coordinates, arriveBy)
+    api_response = query_journeys(origin_coordinates, destination_coordinates, arrive_by)
     journeys = filter_journeys(result=api_response, origin=origin, destination=destination)
     email_status = send_email(body_text=journeys)
     return {"Journeys": journeys, "Email Status": email_status}
@@ -41,15 +41,15 @@ def lambda_handler(event, context):
         params = event.get("queryStringParameters") or {}
         origin = params.get("origin")
         destination = params.get("destination")
-        arriveBy = params.get("arriveBy")
+        arrive_by = params.get("arriveBy")
 
-        if not origin or not destination or not arriveBy:
+        if not origin or not destination or not arrive_by:
             return {
                 "statusCode": 400,
                 "body": json.dumps({"error": "Missing origin, destination, or arriveBy"})
             }
 
-        result = start(origin, destination, arriveBy)
+        result = start(origin, destination, arrive_by)
         metrics.add_metric(name="JourneyEmailsSent", unit=MetricUnit.Count, value=1)
         return {"statusCode": 200, "body": json.dumps({"message": result})}
 

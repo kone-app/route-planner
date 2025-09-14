@@ -15,18 +15,18 @@ def get_coordinates(origin, destination):
     return origin_coordinates, destination_coordinates
 
 
-def query_journeys(origin_coordinates, destination_coordinates, arriveBy):
+def query_journeys(origin_coordinates, destination_coordinates, arrive_by):
     origin = f"origin: {{ location: {{ coordinate: {{ latitude: {origin_coordinates[1]}, longitude: {origin_coordinates[0]} }} }} }}"
     destination = f"destination: {{ location: {{ coordinate: {{ latitude: {destination_coordinates[1]}, longitude: {destination_coordinates[0]} }} }} }}"
-    arriveBy = datetime.strptime(arriveBy, "%Y%m%d%H%M%S")
+    arrive_by = datetime.strptime(arrive_by, "%Y%m%d%H%M%S")
 
     # If input is weekend, shift to Monday
-    if arriveBy.weekday() == 5:
-        arriveBy += timedelta(days=2)
-    elif arriveBy.weekday() == 6:
-        arriveBy += timedelta(days=1)
+    if arrive_by.weekday() == 5:
+        arrive_by += timedelta(days=2)
+    elif arrive_by.weekday() == 6:
+        arrive_by += timedelta(days=1)
 
-    latest_arrival = '"' + arriveBy.strftime("%Y-%m-%dT%H:%M:%S+03:00") + '"'
+    latest_arrival = '"' + arrive_by.strftime("%Y-%m-%dT%H:%M:%S+03:00") + '"'
 
     query = """
     {
