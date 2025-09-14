@@ -3,8 +3,7 @@ requests
 python-dotenv
 aws_xray_sdk
 pytest
-aws-cdk-lib>=2.0.0
-constructs>=10.0.0
-aws-cdk.aws-s3
-aws-cdk.aws-s3-deployment
-aws-cdk.aws-apigateway
+
+# CDK v2
+aws-cdk-lib>=2.150.0
+constructs>=10.0.0,<11.0.0
