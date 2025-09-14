@@ -90,9 +90,9 @@ class RoutingStack(Stack):
         s3deploy.BucketDeployment(
             self,
             "DeployOpenApi",
-            sources=[s3deploy.Source.asset("./", exclude=["cdk/*", "tests/*", ".venv/*"])],
+            sources=[s3deploy.Source.asset("./", exclude=["**", "!openapi.yml"])],  # only include openapi.yml
             destination_bucket=bucket,
-            destination_key_prefix="docs",
+            destination_key_prefix="docs",  # file will be at /docs/openapi.yml
         )
 
         # API Gateway route /docs -> serves openapi.yml from S3
