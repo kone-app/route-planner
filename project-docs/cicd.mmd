@@ -1,0 +1,8 @@
+flowchart LR
+    A[GitHub Push] --> B[CI/CD Workflow]
+    B --> C[Run Pytest + Coverage]
+    B --> D[SonarQube Analysis]
+    C --> E[Build Docker Image]
+    D --> E
+    E --> F[Deploy with AWS CDK]
+    F --> G[AWS Lambda + API Gateway]

@@ -36,7 +36,7 @@ A serverless route-planning API built on **AWS Lambda**, **API Gateway**, and **
 
 ## Route Planner Sequence Diagram
 
-![Sequence Diagram](docs/sequence.png)
+![Sequence Diagram](project-docs/sequence.png)
 
 ```mermaid
 sequenceDiagram
@@ -134,7 +134,6 @@ Test locally:
 ```
 http://127.0.0.1:3000/journeys?origin=Aalto-yliopisto&destination=Kone-Building&arriveBy=20250911084500
 ```
-
 ---
 
 ## Deployment (CDK)
@@ -160,7 +159,7 @@ This provisions:
 
 ## CI/CD Pipeline
 
-![CI/CD Workflow](docs/cicd.png)
+![CI/CD Workflow](project-docs/cicd.png)
 
 ```mermaid
 flowchart LR

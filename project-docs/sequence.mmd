@@ -1,0 +1,18 @@
+sequenceDiagram
+    participant U as User
+    participant APIGW as API Gateway
+    participant L as AWS Lambda (Journey Service)
+    participant D as Digitransit API
+    participant F as Filters
+    participant N as Notifier (Email)
+
+    U->>APIGW: GET /journeys?origin=&destination=&arriveBy=
+    APIGW->>L: Invoke Lambda
+    L->>D: Query routes (GraphQL)
+    D-->>L: Journeys response
+    L->>F: Apply journey filters
+    F-->>L: Filtered journeys
+    L->>N: Send email
+    N-->>L: Email status (Sent)
+    L-->>APIGW: Return JSON {Journeys, Email Status}
+    APIGW-->>U: HTTP 200 + JSON

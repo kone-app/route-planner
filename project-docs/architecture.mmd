@@ -1,0 +1,7 @@
+flowchart LR
+    A[API Gateway] --> B["AWS Lambda (Journey Service)"]
+    B --> C[Digitransit API]
+    B --> D[Filters]
+    B --> E[Notifier]
+    E --> F[Email]
+
