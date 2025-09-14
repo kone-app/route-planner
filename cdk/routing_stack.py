@@ -69,10 +69,9 @@ class RoutingStack(Stack):
             rule.add_target(targets.LambdaFunction(journey_lambda))
 
         
-                # ----------------------------
         # S3 bucket for OpenAPI docs
         # ----------------------------
-       bucket = s3.Bucket(
+        bucket = s3.Bucket(
             self,
             "OpenApiDocsBucket",
             public_read_access=True,
@@ -82,21 +81,20 @@ class RoutingStack(Stack):
                 restrict_public_buckets=False,
                 block_public_policy=False,
             ),
-            removal_policy=RemovalPolicy.DESTROY,   # clean up in dev
-            auto_delete_objects=True                # clean up in dev
+            removal_policy=cdk.RemovalPolicy.DESTROY,   # clean up in dev
+            auto_delete_objects=True                    # clean up in dev
         )
 
-
-        # Deploy ONLY openapi.yml into /docs
+        # Deploy openapi.yml into /docs in bucket
         s3deploy.BucketDeployment(
             self,
             "DeployOpenApi",
-            sources=[s3deploy.Source.asset("./", exclude=["*", "!openapi.yml"])],
+            sources=[s3deploy.Source.asset("./", exclude=["cdk/*", "tests/*", ".venv/*"])],
             destination_bucket=bucket,
             destination_key_prefix="docs",
         )
 
-        # API Gateway route /docs -> proxy to S3
+        # API Gateway route /docs -> serves openapi.yml from S3
         docs_resource = api.root.add_resource("docs")
         docs_resource.add_method(
             "GET",
@@ -105,17 +103,13 @@ class RoutingStack(Stack):
             ),
         )
 
+        # CloudFormation outputs
+        CfnOutput(self, "OpenApiS3Url", value=f"http://{bucket.bucket_website_domain_name}/docs/openapi.yml")
+
         # Outputs
         if enable_schedule:  # only output if created
             CfnOutput(self, "EventRuleName", value=rule.rule_name)
-        # CloudFormation outputs
-        CfnOutput(
-            self, "OpenApiS3Url",
-            value=f"http://{bucket.bucket_website_domain_name}/docs/openapi.yml"
-        )
-
-
-       
+               
         # Output useful info after deploy
         CfnOutput(self, "ApiEndpoint", value=api.url)
         CfnOutput(self, "LambdaName", value=journey_lambda.function_name)
