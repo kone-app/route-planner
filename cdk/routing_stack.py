@@ -8,6 +8,7 @@ from aws_cdk import (
     aws_events_targets as targets,
     aws_s3 as s3,
     aws_s3_deployment as s3deploy,
+    RemovalPolicy,
 
 )
 from constructs import Construct
@@ -81,7 +82,7 @@ class RoutingStack(Stack):
                 restrict_public_buckets=False,
                 block_public_policy=False,
             ),
-            removal_policy=cdk.RemovalPolicy.DESTROY,   # clean up in dev
+            removal_policy=RemovalPolicy.DESTROY,   # clean up in dev
             auto_delete_objects=True                    # clean up in dev
         )
 
