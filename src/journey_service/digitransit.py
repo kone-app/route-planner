@@ -30,7 +30,7 @@ def query_journeys(origin_coordinates, destination_coordinates, arriveBy):
 
     query = """
     {
-        planConnection("""+ origin + destination +"""    first: 10
+        planConnection("""+ origin + destination +"""
             dateTime:  {
             latestArrival: """ + latest_arrival + """
             }

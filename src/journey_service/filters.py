@@ -4,8 +4,8 @@ from .utils import format_arrival_time
 def filter_journeys(result, origin, destination):
     journeys = []
     edges = result["data"]["planConnection"]["edges"]
-    sorted_edges = sorted(edges, key=lambda e: datetime.fromisoformat(e["node"]["start"]))[-5:]
-
+    sorted_edges = sorted(edges, key=lambda e: datetime.fromisoformat(e["node"]["start"]))[-10:]
+    journey.append("Route Details :-")
     for i in sorted_edges:
         journey_duration = 0
         for j in i['node']['legs']:
@@ -18,9 +18,11 @@ def filter_journeys(result, origin, destination):
             to_loc = j['to']['name']
             if to_loc == "Destination":
                 to_loc = destination
+            journey.append("Time to leave from " + from_loc + " : " + start_time)
             journey = from_loc + ":"+start_time + "  --TO-->  " + to_loc + ":"+end_time + "  BY-->  " + j['mode'] + " " + str(timedelta(seconds=duration))+" min"
             journeys.append(journey)
             journey_duration += duration
         journeys.append("Total Journey Duration = " + str(timedelta(seconds=journey_duration))+" min")
+        journeys.append("")
         journeys.append("")
     return journeys

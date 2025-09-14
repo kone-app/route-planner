@@ -10,10 +10,10 @@ Resources:
       ImageUri: samcli/journeyservicefunction:rapid-1.0
       Environment:
         Variables:
-          DIGITRANSIT_API_KEY: e5918fdccafe4f3fa8026cfb53180762
-          FROM_EMAIL: kaaira1012@gmail.com
-          TO_EMAIL: sushil16.in@gmail.com
-          GMAIL_APP_PASSWORD: rstobrlmutsyzosg
+          DIGITRANSIT_API_KEY: ${{ secrets.DIGITRANSIT_API_KEY }}
+          FROM_EMAIL: ${{ secrets.FROM_EMAIL }}
+          TO_EMAIL: ${{ secrets.TO_EMAIL }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           GEO_CODING_URL: https://api.digitransit.fi/geocoding/v1/search
           ROUTING_URL: https://api.digitransit.fi/routing/v2/hsl/gtfs/v1
       Events:
