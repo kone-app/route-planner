@@ -257,7 +257,7 @@ Response:
 
 - Follows PEP8 naming (`latest_arrival` not `latestArrival`)  
 - 80% unit test coverage with pytest  
-- Secrets handled via **GITHUB Secret ( AWS KMS or Secrets Manager or etc can also be used )**  
+- Secrets & Variables handled via **GITHUB Secret ( AWS KMS or Secrets Manager or etc can also be used )**  
 
 ---
 
