@@ -55,7 +55,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
-  deploy:
+  aws-deploy:
     needs: build-test-sonar
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
@@ -81,12 +81,12 @@ jobs:
         run: |
           pip install -r cdk/requirements-cdk.txt
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
+      # - name: Configure AWS credentials
+      #   uses: aws-actions/configure-aws-credentials@v2
+      #   with:
+      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #     aws-region: us-east-1
       
       - name: CDK Bootstrap
         run: cdk bootstrap aws://$AWS_ACCOUNT_ID/$AWS_DEFAULT_REGION
