@@ -26,10 +26,10 @@ def start(origin, destination, arriveBy):
         dt += timedelta(days=1)
         logger.info("Adjusted arriveBy from Sunday -> Monday")
 
-    adjusted_arriveBy = dt.strftime("%Y%m%d%H%M%S")
+    arriveBy = dt.strftime("%Y%m%d%H%M%S")
 
     origin_coordinates, destination_coordinates = get_coordinates(origin, destination)
-    api_response = query_journeys(origin_coordinates, destination_coordinates, adjusted_arriveBy)
+    api_response = query_journeys(origin_coordinates, destination_coordinates, arriveBy)
     journeys = filter_journeys(result=api_response, origin=origin, destination=destination)
     email_status = send_email(body_text=journeys)
     return {"Journeys": journeys, "Email Status": email_status}
