@@ -2,8 +2,8 @@ name: Trigger App to Send Mail
 
 on:
   schedule:
-    #- cron: '0 6 * * 1-5'   # 06:00 UTC, Monday–Friday
-    - cron: '*/5 * * * 1-5'  # mail at Every 5 Min , Monday–Friday
+    - cron: '0 6 * * 1-5'   # 06:00 UTC, Monday–Friday
+    #- cron: '*/5 * * * 1-5'  # mail at Every 5 Min , Monday–Friday
   workflow_dispatch:       # Optional manual trigger
 
 jobs:
