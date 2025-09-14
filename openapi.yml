@@ -1,0 +1,81 @@
+openapi: 3.0.3
+info:
+  title: Route Planner API
+  description: |
+    REST API wrapper over Digitransit GraphQL for planning journeys.
+    Returns multiple route options (up to 5) between origin and destination.
+    Designed for Andrea’s use case: finding when to leave Aalto Yliopisto
+    to reach Keilaniemi / KONE Building by 08:45 on weekdays.
+  version: 1.0.0
+servers:
+  - url: https://{api_id}.execute-api.{region}.amazonaws.com/prod
+    variables:
+      api_id:
+        default: your-api-id
+      region:
+        default: us-east-1
+
+paths:
+  /journeys:
+    get:
+      summary: Get journey options between two stops
+      description: >
+        Returns up to 5 journey options (sorted by duration) for a given
+        origin, destination, and arrival time.  
+        Adjusts weekend requests to Monday.
+      parameters:
+        - name: origin
+          in: query
+          required: true
+          schema:
+            type: string
+          example: Aalto-yliopisto
+        - name: destination
+          in: query
+          required: true
+          schema:
+            type: string
+          example: Keilaniemi
+        - name: arriveBy
+          in: query
+          required: true
+          schema:
+            type: string
+            pattern: '^[0-9]{14}$'
+          description: Arrival time in format `yyyyMMddHHmmss`
+          example: "20250915084500"
+      responses:
+        "200":
+          description: Successful response with journeys
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: object
+                    properties:
+                      Journeys:
+                        type: array
+                        items:
+                          type: string
+                        example:
+                          - "Route Details :-"
+                          - "Time to leave from Aalto-yliopisto : 08:19:52"
+                          - "Aalto-yliopisto:08:19:52 --TO--> Aalto-yliopisto (M):08:22:00 BY--> WALK 0:02:08 min"
+                      Email Status:
+                        type: string
+                        example: "Sent"
+        "400":
+          description: Missing or invalid parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                example:
+                  error: "from, to, arriveBy are required"
+        "500":
+          description: Internal server error

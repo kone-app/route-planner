@@ -4,6 +4,9 @@ from aws_cdk import (
     aws_apigateway as apigateway,
     Duration,
     CfnOutput,
+    aws_events as events,
+    aws_events_targets as targets,
+
 )
 from constructs import Construct
 import os
@@ -48,6 +51,23 @@ class RoutingStack(Stack):
         # /journeys endpoint
         journeys = api.root.add_resource("journeys")
         journeys.add_method("GET")
+
+        # Optional: Enable schedule if flag is set
+        enable_schedule = os.getenv("ENABLE_SCHEDULE", "false").lower() == "true"
+        if enable_schedule:
+            rule = events.Rule(
+                self,
+                "DailyMorningRule",
+                schedule=events.Schedule.cron(
+                    minute=os.getenv("CRON_MINUTE", "0"),
+                    hour=os.getenv("CRON_HOUR", "3"),         # 06:00 EEST = 03:00 UTC
+                    week_day="MON-FRI"
+                ),
+            )
+            rule.add_target(targets.LambdaFunction(journey_lambda))
+
+            CfnOutput(self, "EventRuleName", value=rule.rule_name)
+
 
         # Output useful info after deploy
         CfnOutput(self, "ApiEndpoint", value=api.url)

@@ -113,4 +113,7 @@ jobs:
           GEO_CODING_URL: ${{ vars.GEO_CODING_URL }}
           ROUTING_URL: ${{ vars.ROUTING_URL }}
           JOURNEY_COUNT: ${{ vars.JOURNEY_COUNT }}
+          CRON_MINUTE: ${{ vars.CRON_MINUTE }}
+          CRON_HOUR: ${{ vars.CRON_HOUR }}
+          ENABLE_SCHEDULE: ${{ vars.ENABLE_SCHEDULE }}
 
