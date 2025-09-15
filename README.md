@@ -221,12 +221,14 @@ flowchart LR
 
 ---
 ## API Specification
-**Endpoint**
-GET /journeys?origin=Aalto-yliopisto&destination=Kone-Building&arriveBy=20250911084500
-**Parameters**
--	origin – starting stop (string)
--	destination – end stop (string)
--	arriveBy – datetime (yyyyMMddHHmmss)
+
+- **Endpoint**
+  GET /journeys?origin=Aalto-yliopisto&destination=Kone-Building&arriveBy=20250911084500
+
+- **Parameters**
+  -	origin – starting stop (string)
+  -	destination – end stop (string)
+  -	arriveBy – datetime (yyyyMMddHHmmss)
 
 
 ## Example API Call
@@ -303,7 +305,7 @@ Response:
 - Follows PEP8 naming (`latest_arrival` not `latestArrival`)  
 - 80% unit test coverage with pytest  
 - Secrets & Variables handled via **GITHUB Secret ( AWS KMS or Secrets Manager or etc can also be used )** 
- 
+
 
 ---
 
