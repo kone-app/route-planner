@@ -52,6 +52,9 @@ The solution is a serverless REST API built with AWS-native services:
                                       v
                                     Email
 ```
+AWS Components:
+-	API Gateway → Lambda → Digitransit API
+-	EventBridge (cron) → Lambda → SES/Gmail
 
 ---
 
@@ -208,9 +211,9 @@ flowchart LR
 # Endpoint
 GET /journeys?origin=Aalto-yliopisto&destination=Kone-Building&arriveBy=20250911084500
 # Parameters
-•	origin – starting stop (string)
-•	destination – end stop (string)
-•	arriveBy – datetime (yyyyMMddHHmmss)
+-	origin – starting stop (string)
+-	destination – end stop (string)
+-	arriveBy – datetime (yyyyMMddHHmmss)
 
 
 ## Example API Call
