@@ -1,5 +1,0 @@
-aws-lambda-powertools
-requests
-python-dotenv
-aws_xray_sdk
-pytest
