@@ -54,7 +54,7 @@ The solution is a serverless REST API built with AWS-native services:
 ```
 AWS Components:
 -	API Gateway → Lambda → Digitransit API
--	EventBridge (cron) → Lambda → SES/Gmail
+-	EventBridge (cron) → Lambda → Gmail
 
 ---
 
@@ -194,6 +194,19 @@ flowchart LR
 
 - **ci-cd.yml** → Runs tests + SonarQube + deploy  
 - **trigger-mail.yml** → Scheduled mail trigger  
+
+-	**Build & Test**
+	  - Python 3.12 for Lambda code
+   	- Node.js 20 for AWS CDK
+	  - Run pytest --cov for coverage
+    - SonarQube scan
+- **Deploy**
+	  - CDK Bootstrap → cdk bootstrap
+	  - GitHub Actions deploys to AWS
+- **Schedule**
+    - EventBridge cron → cron(0 6 ? * MON-FRI *)
+    - Triggers Lambda at 06:00 (UTC)
+
 
 ---
 
