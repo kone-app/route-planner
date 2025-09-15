@@ -35,7 +35,7 @@ The solution is a serverless REST API built with AWS-native services:
 -	Weekend adjustment (Sat/Sun → Monday)
 -	Email notifications at 06:00 weekdays
 -	Observability with AWS Lambda Powertools (logs, tracing, metrics)
--	CI/CD pipeline with GitHub Actions + SonarQube
+
 
 
 ---
