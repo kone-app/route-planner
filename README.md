@@ -4,6 +4,23 @@ A serverless route-planning API built on **AWS Lambda**, **API Gateway**, and **
 
 ---
 
+## Challenge
+Andrea wants to know when she should leave from Aalto Yliopisto to reach KONE Building by 08:45 on weekdays.
+•	Andrea prefers REST APIs (not GraphQL).
+•	She wants an email every weekday at 06:00 with journey details.
+•	Solution should run both locally and in the AWS Cloud.
+
+## Solution Overview
+The solution is a serverless REST API built with AWS-native services:
+•	AWS Lambda (Python 3.12) – executes API logic
+•	API Gateway – exposes REST endpoints
+•	EventBridge – schedules daily 06:00 triggers (Mon–Fri)
+•	SES / Gmail SMTP – email notifications
+•	AWS CDK (Python) – infrastructure-as-code
+•	AWS SAM CLI – local development & testing
+
+
+
 ## Features
 
 - Query routes from [HSL Digitransit API](https://digitransit.fi/en/developers/)  
@@ -13,7 +30,15 @@ A serverless route-planning API built on **AWS Lambda**, **API Gateway**, and **
 - Infrastructure-as-Code with **AWS CDK**  
 - Unit tests with **pytest**  
 - Code quality with **SonarQube**  
-- CI/CD via **GitHub Actions**  
+- CI/CD via **GitHub Actions** 
+
+•	REST API wrapper for Digitransit GraphQL
+•	Multiple journey options (5 itineraries, sorted by duration)
+•	Weekend adjustment (Sat/Sun → Monday)
+•	Email notifications at 06:00 weekdays
+•	Observability with AWS Lambda Powertools (logs, tracing, metrics)
+•	CI/CD pipeline with GitHub Actions + SonarQube
+
 
 ---
 
