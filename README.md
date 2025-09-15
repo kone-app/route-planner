@@ -36,8 +36,6 @@ The solution is a serverless REST API built with AWS-native services:
 -	Email notifications at 06:00 weekdays
 -	Observability with AWS Lambda Powertools (logs, tracing, metrics)
 
-
-
 ---
 
 ## Rout Planner Architecture
@@ -206,6 +204,14 @@ flowchart LR
 - **CloudWatch Logs** → Lambda execution logs  
 
 ---
+## API Specification
+# Endpoint
+GET /journeys?origin=Aalto-yliopisto&destination=Kone-Building&arriveBy=20250911084500
+# Parameters
+•	origin – starting stop (string)
+•	destination – end stop (string)
+•	arriveBy – datetime (yyyyMMddHHmmss)
+
 
 ## Example API Call
 
