@@ -326,4 +326,4 @@ Response:
 ---
 
 ## Contributor
-- Full Stack and Architecture **Sushil Kumar**  
+- Full Stack Developer & Architect | **Sushil Kumar**  
